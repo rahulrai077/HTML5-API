@@ -1,0 +1,53 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="keywords" content="HTML5 Template" />
+	<title> GeoLocation demo </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	
+</head>
+<body>
+	<div id="wrapper">
+	<section>
+    	<h2>Local Storage Here</h2>    	
+		<button id="finds" onclick="findLocation();">Find Location Item</button>
+		<hr><br><br>    	
+		<p id="outputs">ok</p>
+	</section>
+</div>
+<script>
+	var x = document.getElementById("outputs");
+	function findLocation() {
+	    if (navigator.geolocation) {
+	        navigator.geolocation.getCurrentPosition(showPosition);
+	    } else { 
+	        x.innerHTML = "Geolocation is not supported by this browser.";
+	    }
+	}
+	
+	function showPosition(position) {
+		//x.innerHTML = "Latitude is " + position.coords.latitude + "<br> longitude is " + position.coords.longitude;
+		var locAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+position.coords.latitude+","+position.coords.longitude+"&sensor=false";
+		// x.innerHTML = locAPI;
+		$.ajax({
+			url: locAPI,
+			success: function(data) {
+				console.log(data);
+				x.innerHTML = data.results[0].address_components[0].long_name +", ";
+				x.innerHTML += data.results[0].address_components[1].long_name +", ";
+				x.innerHTML += data.results[0].address_components[2].long_name +", ";
+				x.innerHTML += data.results[0].address_components[3].long_name +", ";
+				x.innerHTML += data.results[0].address_components[4].long_name +", ";
+				x.innerHTML += data.results[0].address_components[5].long_name +", ";
+				x.innerHTML += data.results[0].address_components[6].long_name +", ";
+				x.innerHTML += data.results[0].address_components[7].long_name +", ";
+				x.innerHTML += data.results[0].address_components[8].long_name +", ";
+			}
+		});
+	}
+
+
+
+</script>
+</body>
+</html>

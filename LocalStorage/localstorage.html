@@ -1,0 +1,54 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="keywords" content="HTML5 Template" />
+	<title> Local Storage demo </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	
+</head>
+<body>
+	<div id="wrapper">
+	<section>
+    	<h2>Local Storage Here</h2>
+    	<form id="localform">
+    		<label for="username">Name</label>
+    		<input type="text" name="username" id="username" placeholder="add items">
+    		<button id="addItem">Set Item</button>
+    		<button id="removeItem">Remove Item</button>
+    	</form>
+    	<hr><br><br>
+    	<div class="outputs">
+    		<h3>Output Here</h3>
+    		<ul id="checklists"></ul>
+    	</div>
+	</section>
+</div>
+<script>
+	
+	$(document).on("click", "#addItem", function() {
+		var values = $("#username").val();
+		if(values != '') {
+			$("#localform")[0].reset();
+			$("ul#checklists").prepend("<li>" + values + "</li>");
+			var listitems = $("#checklists").html();
+			localStorage.setItem("tolist", listitems);
+		}
+		else {
+			alert("Please write something");
+		}
+		return false;
+	});
+	
+	if (localStorage.getItem("tolist")) {
+		var items = localStorage.getItem("tolist");
+		$("#checklists").html(items);
+	}
+
+	$(document).on("click", "#removeItem", function() {
+		localStorage.removeItem("tolist");
+		
+	});
+
+</script>
+</body>
+</html>
